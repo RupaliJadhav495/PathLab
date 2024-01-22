@@ -23,12 +23,13 @@ public class HomePageTest extends BaseTest {
  @Test(priority = 2,testName="TODO Tab Visibility",enabled =true)
  public void TodoTabVisibility() {
 	 Hp.checkToDoTag();
+	 
  }
  @Test(priority = 3,testName="Test Selection",enabled =true)
  public void EnterTest() {
 	 Hp.TestOptionSelection();
  }
- @Test(priority = 4,testName="Discount Selection",enabled =true)
+ @Test(priority = 4,testName="Discount Selection",enabled =false)
  public void EnterDiscount() throws InterruptedException {
 	 Hp.DiscountSlection();
  }

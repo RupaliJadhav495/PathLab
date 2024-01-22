@@ -30,5 +30,9 @@ public class BaseTest {
 			
 		}
 	}
+	@AfterTest
+	public void closeSession() {
+		driver.quit();
+	}
 	
 }
