@@ -4,8 +4,10 @@ import java.time.Duration;
 import java.util.List;
 
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -19,8 +21,10 @@ import utility.Log;
 public class HomePg {
 	public WebDriver driver;
 	public WebDriverWait wait;
+	public Actions act;
+	public JavascriptExecutor js;
 
-	@FindBy(xpath = "//ul[@class=\"MuiList-root MuiList-padding\"]/li")
+	@FindBy(xpath = "//ul[@class=\"MuiList-root MuiList-padding\"]")
 	private List<WebElement> ToDoList;
 	@FindBy(xpath = "//div[@class=\"jss55\"]")
 	private WebElement ToDoTab;
@@ -28,10 +32,6 @@ public class HomePg {
 	private WebElement total;
 	@FindBy(xpath = "//input[@id=\"patient-test\"]")
 	private WebElement TestSelect;
-	@FindBy(xpath = "//input[@aria-activescendant=\"patient-test-option-3\"]")
-	private WebElement TestSelect1;
-	@FindBy(xpath = "//input[@aria-activescendant=\"patient-test-option-2\"]")
-	private WebElement TestSelect2;
 	@FindBy(xpath="//*[@id=\"root\"]/div/main/div[2]/div[3]/div/div[2]/div[2]/div/div")
 	private WebElement Discount;
 	@FindBy(xpath = "(//ul[@class=\"MuiList-root MuiMenu-list MuiList-padding\"]/li)[2]")
@@ -41,11 +41,13 @@ public class HomePg {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		act=new Actions(driver);
+		js = (JavascriptExecutor)driver;
 	}
 
 	public void checkToDoList() {
 		try {
-			wait.until(ExpectedConditions.visibilityOfAllElements(ToDoList));
+		//	wait.until(ExpectedConditions.visibilityOfAllElements(ToDoList));
 			int listSize=ToDoList.size();
 			Log.info("ToDo List is Displayed And List count is " + ToDoList.size());
 			Reporter.log("ToDo List is Displayed And List count is " +listSize, true);
@@ -64,18 +66,17 @@ public class HomePg {
 	}
 	public void  TestOptionSelection() {
 		try {
-			JavascriptExecutor js = (JavascriptExecutor)driver;
-			js.executeScript("arguments[0].scrollIntoView(true)",total);
-			wait.until(ExpectedConditions.visibilityOf(total));
-			Log.info("Test Selection Tab is Visible");
-			Reporter.log("Total is Visible");
-			TestSelect.click();
-			Log.info("Test Selection Tab is clicked");
-//			wait.until(ExpectedConditions.visibilityOf(TestSelect1));
-//			TestSelect1.click();
-//			Log.info("Patient Selected first test");
-//			TestSelect2.click();
-//			Log.info("Patient Selected first test");
+			act.moveToElement(total).perform();
+			wait.until(ExpectedConditions.visibilityOf(TestSelect));
+			// TestSelect.sendKeys(" ");
+			 act.click(TestSelect).sendKeys("  ").build().perform();
+			 act.sendKeys(Keys.ARROW_UP).perform();
+			 Thread.sleep(1000);
+			 act.sendKeys(Keys.ARROW_UP).perform();
+			 Thread.sleep(1000);
+			 act.sendKeys(Keys.ENTER).perform();
+			
+			
 		}catch (Exception e) {
 			// TODO: handle exception
 		}

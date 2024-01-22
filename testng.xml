@@ -4,8 +4,10 @@
   <test thread-count="5" name="Test">
     <classes>
       <class name="testPathLab.LoginTest"/>
-   <!-- <class name="testPathLab.HomePageTest"/>   --> 
-      <class name="testPathLab.PatientPageTest"/>
+      <class name="testPathLab.HomePageTest"/>   
+     <class name="testPathLab.PatientPageTest"/>
+      <class name="testPathLab.SecondaryDetailsTest"/>
+      <class name="testPathLab.TestCalculator"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->
